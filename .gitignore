@@ -1,0 +1,13 @@
+node_modules/
+dist/
+reports/
+*.tmp
+.DS_Store
+
+web-dist/
+
+.env
+.env.*
+!.env.example
+*.log
+*.tgz

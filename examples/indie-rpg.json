@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "name": "Ashvale — RPG progression slice",
+  "currencies": [
+    { "id": "gold", "label": "Gold", "startingBalance": 40 },
+    { "id": "ore", "label": "Iron ore", "startingBalance": 0 },
+    { "id": "renown", "label": "Renown", "startingBalance": 0 }
+  ],
+  "activities": [
+    { "id": "goblin-hunt", "label": "Hunt goblins", "durationMinutes": 18, "rewards": [{ "currency": "gold", "amount": 24 }, { "currency": "ore", "amount": 1 }, { "currency": "renown", "amount": 3 }], "successChance": 0.92 },
+    { "id": "herb-run", "label": "Gather and sell herbs", "durationMinutes": 10, "rewards": [{ "currency": "gold", "amount": 13 }] },
+    { "id": "forge-sword", "label": "Forge iron sword", "durationMinutes": 5, "costs": [{ "currency": "ore", "amount": 3 }, { "currency": "gold", "amount": 35 }], "rewards": [{ "currency": "renown", "amount": 12 }] },
+    { "id": "potion", "label": "Buy healing potion", "durationMinutes": 1, "costs": [{ "currency": "gold", "amount": 18 }], "rewards": [] }
+  ],
+  "exchanges": [
+    { "id": "ore-sale", "label": "Sell ore to merchant", "input": { "currency": "ore", "amount": 2 }, "output": { "currency": "gold", "amount": 12 }, "repeatable": true }
+  ],
+  "profiles": [
+    { "id": "story-player", "label": "Story-focused player", "sessionMinutes": 60, "sessionsPerDay": 1, "days": 10, "actionWeights": { "goblin-hunt": 1, "herb-run": 1, "forge-sword": 0.35, "potion": 0.4 } },
+    { "id": "grinder", "label": "Completionist grinder", "sessionMinutes": 120, "sessionsPerDay": 1, "days": 10, "actionWeights": { "goblin-hunt": 2, "herb-run": 1, "forge-sword": 1, "potion": 0.25 } }
+  ],
+  "contracts": [
+    { "id": "story-renown", "type": "milestone-reach", "profileId": "story-player", "currency": "renown", "target": 30, "withinDays": 10, "minPassRate": 0.8 },
+    { "id": "potion-access", "type": "sink-affordability", "profileId": "story-player", "actionId": "potion", "withinDays": 3, "minPassRate": 0.85 },
+    { "id": "grinder-gold-range", "type": "balance-range", "profileId": "grinder", "currency": "gold", "withinDays": 10, "min": 0, "max": 2500, "minPassRate": 0.7 }
+  ]
+}

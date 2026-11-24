@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "name": "Harbor RP — starter economy",
+  "currencies": [
+    { "id": "credits", "label": "Credits", "startingBalance": 120 },
+    { "id": "tokens", "label": "Harbor tokens", "startingBalance": 0 }
+  ],
+  "activities": [
+    { "id": "delivery", "label": "Courier delivery", "durationMinutes": 12, "cooldownMinutes": 0, "rewards": [{ "currency": "credits", "amount": 85 }] },
+    { "id": "mechanic", "label": "Repair shift", "durationMinutes": 20, "rewards": [{ "currency": "credits", "amount": 150 }] },
+    { "id": "fuel", "label": "Refuel vehicle", "durationMinutes": 2, "costs": [{ "currency": "credits", "amount": 45 }], "rewards": [{ "currency": "tokens", "amount": 1 }] },
+    { "id": "rent", "label": "Daily apartment rent", "durationMinutes": 1, "costs": [{ "currency": "credits", "amount": 160 }], "rewards": [] }
+  ],
+  "exchanges": [
+    { "id": "token-booth", "label": "Credits to harbor tokens", "input": { "currency": "credits", "amount": 1000 }, "output": { "currency": "tokens", "amount": 1 }, "repeatable": true }
+  ],
+  "profiles": [
+    { "id": "casual", "label": "Casual resident", "sessionMinutes": 45, "sessionsPerDay": 1, "days": 14, "actionWeights": { "delivery": 3, "mechanic": 1, "fuel": 0.5, "rent": 0.2 } },
+    { "id": "regular", "label": "Regular worker", "sessionMinutes": 100, "sessionsPerDay": 2, "days": 14, "actionWeights": { "delivery": 2, "mechanic": 3, "fuel": 0.5, "rent": 0.5 } }
+  ],
+  "contracts": [
+    { "id": "casual-rent-affordable", "type": "sink-affordability", "profileId": "casual", "actionId": "rent", "withinDays": 7, "minPassRate": 0.7 },
+    { "id": "regular-token-milestone", "type": "milestone-reach", "profileId": "regular", "currency": "tokens", "target": 5, "withinDays": 14, "minPassRate": 0.5 },
+    { "id": "casual-currency-window", "type": "balance-range", "profileId": "casual", "currency": "credits", "withinDays": 7, "min": 0, "max": 2500, "minPassRate": 0.75 }
+  ]
+}

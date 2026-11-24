@@ -1,0 +1,368 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Economy QA Model v1",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "name",
+    "currencies",
+    "activities",
+    "profiles"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "currencies": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/currency"
+      }
+    },
+    "activities": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/activity"
+      }
+    },
+    "exchanges": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/exchange"
+      },
+      "default": []
+    },
+    "profiles": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/profile"
+      }
+    },
+    "contracts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/contract"
+      },
+      "default": []
+    }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-zA-Z][a-zA-Z0-9._-]*$"
+    },
+    "amount": {
+      "type": "object",
+      "required": [
+        "currency",
+        "amount"
+      ],
+      "properties": {
+        "currency": {
+          "$ref": "#/$defs/id"
+        },
+        "amount": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "source": {
+      "type": "object",
+      "properties": {
+        "file": {
+          "type": "string"
+        },
+        "row": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "field": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "file"
+      ]
+    },
+    "currency": {
+      "type": "object",
+      "required": [
+        "id",
+        "label"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "startingBalance": {
+          "type": "number",
+          "minimum": 0
+        },
+        "source": {
+          "$ref": "#/$defs/source"
+        }
+      },
+      "additionalProperties": false
+    },
+    "activity": {
+      "type": "object",
+      "required": [
+        "id",
+        "label",
+        "durationMinutes"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "durationMinutes": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "cooldownMinutes": {
+          "type": "number",
+          "minimum": 0
+        },
+        "costs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/amount"
+          }
+        },
+        "rewards": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/amount"
+          }
+        },
+        "successChance": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "source": {
+          "$ref": "#/$defs/source"
+        }
+      },
+      "additionalProperties": false
+    },
+    "exchange": {
+      "type": "object",
+      "required": [
+        "id",
+        "label",
+        "input",
+        "output"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "input": {
+          "$ref": "#/$defs/amount"
+        },
+        "output": {
+          "$ref": "#/$defs/amount"
+        },
+        "repeatable": {
+          "type": "boolean"
+        },
+        "source": {
+          "$ref": "#/$defs/source"
+        }
+      },
+      "additionalProperties": false
+    },
+    "profile": {
+      "type": "object",
+      "required": [
+        "id",
+        "label",
+        "sessionMinutes",
+        "days",
+        "actionWeights"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sessionMinutes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "sessionsPerDay": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "days": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "actionWeights": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          }
+        },
+        "source": {
+          "$ref": "#/$defs/source"
+        }
+      },
+      "additionalProperties": false
+    },
+    "contract": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "id",
+            "type",
+            "profileId",
+            "currency",
+            "target",
+            "withinDays",
+            "minPassRate"
+          ],
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/id"
+            },
+            "type": {
+              "const": "milestone-reach"
+            },
+            "profileId": {
+              "$ref": "#/$defs/id"
+            },
+            "currency": {
+              "$ref": "#/$defs/id"
+            },
+            "target": {
+              "type": "number",
+              "minimum": 0
+            },
+            "withinDays": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "minPassRate": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "source": {
+              "$ref": "#/$defs/source"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "id",
+            "type",
+            "profileId",
+            "actionId",
+            "withinDays",
+            "minPassRate"
+          ],
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/id"
+            },
+            "type": {
+              "const": "sink-affordability"
+            },
+            "profileId": {
+              "$ref": "#/$defs/id"
+            },
+            "actionId": {
+              "$ref": "#/$defs/id"
+            },
+            "withinDays": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "minPassRate": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "source": {
+              "$ref": "#/$defs/source"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "id",
+            "type",
+            "profileId",
+            "currency",
+            "withinDays",
+            "min",
+            "max",
+            "minPassRate"
+          ],
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/id"
+            },
+            "type": {
+              "const": "balance-range"
+            },
+            "profileId": {
+              "$ref": "#/$defs/id"
+            },
+            "currency": {
+              "$ref": "#/$defs/id"
+            },
+            "withinDays": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "min": {
+              "type": "number",
+              "minimum": 0
+            },
+            "max": {
+              "type": "number",
+              "minimum": 0
+            },
+            "minPassRate": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "source": {
+              "$ref": "#/$defs/source"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "additionalProperties": false
+}

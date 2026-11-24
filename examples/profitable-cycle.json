@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "name": "Broken exchange loop — intentionally failing fixture",
+  "currencies": [{ "id": "shards", "label": "Shards" }, { "id": "dust", "label": "Dust" }],
+  "activities": [{ "id": "wait", "label": "Wait", "durationMinutes": 1, "rewards": [{ "currency": "shards", "amount": 1 }] }],
+  "exchanges": [
+    { "id": "shards-to-dust", "label": "Trade shards for dust", "input": { "currency": "shards", "amount": 1 }, "output": { "currency": "dust", "amount": 2 } },
+    { "id": "dust-to-shards", "label": "Trade dust back", "input": { "currency": "dust", "amount": 1 }, "output": { "currency": "shards", "amount": 1 } }
+  ],
+  "profiles": [{ "id": "tester", "label": "Tester", "sessionMinutes": 10, "days": 1, "actionWeights": { "wait": 1 } }]
+}

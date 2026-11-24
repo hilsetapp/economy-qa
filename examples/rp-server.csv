@@ -1,0 +1,9 @@
+kind,id,label,startingBalance,durationMinutes,cooldownMinutes,costs,rewards,sessionMinutes,sessionsPerDay,days,actionWeights,type,profileId,actionId,currency,target,min,max,withinDays,minPassRate,repeatable
+meta,name,"Harbor RP, starter economy",,,,,,,,,,,,,,,,,,,
+currency,credits,Credits,120,,,,,,,,,,,,,,,,,,
+currency,tokens,Harbor tokens,0,,,,,,,,,,,,,,,,,,
+activity,delivery,Courier delivery,,12,0,,credits:85,,,,,,,,,,,,,,
+activity,mechanic,Repair shift,,20,0,,credits:150,,,,,,,,,,,,,,
+activity,rent,Daily apartment rent,,1,0,credits:160,,,,,,,,,,,,,,,
+profile,casual,Casual resident,,,,,,45,1,7,delivery:3;mechanic:1;rent:0.2,,,,,,,,,,
+contract,rent-check,Can afford rent,,,,,,,,,,sink-affordability,casual,rent,,,,,7,0.7,

@@ -1,0 +1,53 @@
+{
+  "name": "economy-qa",
+  "version": "0.1.0",
+  "private": false,
+  "description": "Local-first balance verification for game economies",
+  "type": "module",
+  "bin": {
+    "economy-qa": "./dist/cli.js"
+  },
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "node -e \"import('node:fs').then(fs=>fs.rmSync('dist',{recursive:true,force:true}))\" && tsc -p tsconfig.json",
+    "test": "tsx --test test/*.test.ts",
+    "check": "npm run build && npm test && tsc -p tsconfig.web.json && npm run build:web",
+    "dev": "tsx src/cli.ts",
+    "prepare": "npm run build",
+    "dev:web": "vite --config vite.config.ts --host 0.0.0.0",
+    "build:web": "vite build --config vite.config.ts"
+  },
+  "keywords": [
+    "game-design",
+    "game-economy",
+    "balance",
+    "simulation",
+    "cli",
+    "indie-games",
+    "rp-server"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.4",
+    "tsx": "^4.19.3",
+    "typescript": "^5.7.3",
+    "vite": "^8.3.8"
+  },
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "README.ru.md",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hilsetapp/economy-qa.git"
+  },
+  "homepage": "https://hilsetapp.github.io/economy-qa/"
+}
