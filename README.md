@@ -32,7 +32,7 @@ Inputs are read locally and never uploaded by the CLI or browser workbench. The 
 
 ## Browser workbench
 
-Run `npm run dev:web` and open the printed local URL. The workbench loads either sample, accepts `.json` models and documented `.csv` imports by file picker or drag-and-drop, exposes a canonical JSON editor, runs every named profile locally, evaluates contracts, and downloads the standalone HTML report. Browser runs are capped at 20,000 per profile to keep the page responsive. No account, backend, or network upload is used by the workbench.
+Run `npm run dev:web` and open the printed local URL. The workbench loads either sample, switches between English and Russian, accepts `.json` models and documented `.csv` imports by file picker or drag-and-drop, exposes a canonical JSON editor, runs every named profile locally, evaluates contracts, and downloads the standalone HTML report. Browser runs are capped at 20,000 per profile to keep the page responsive. No account, backend, or network upload is used by the workbench.
 
 ## Model format
 
